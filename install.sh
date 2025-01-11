@@ -47,8 +47,9 @@ if [ "$OPTION" -eq 1 ]; then
     apt update && apt -y install software-properties-common curl apt-transport-https ca-certificates gnupg || { echo "Gagal menginstal dependensi."; exit 1; }
     
     LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php || { echo "Gagal menambahkan repository PHP."; exit 1; }
-    
-    curl -sS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash || { echo "Gagal menambahkan repository MariaDB."; exit 1; }
+
+    # Menggunakan -L untuk mengikuti redirect jika ada
+    curl -LsS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash || { echo "Gagal menambahkan repository MariaDB."; exit 1; }
     
     apt update || { echo "Gagal memperbarui apt."; exit 1; }
     apt -y install php8.3 php8.3-{common,cli,gd,mysql,mbstring,bcmath,xml,fpm,curl,zip} mariadb-server nginx git || { echo "Gagal menginstal PHP, MariaDB, Nginx, atau Git."; exit 1; }
@@ -56,11 +57,11 @@ if [ "$OPTION" -eq 1 ]; then
     # Menginstal Ctrlpanel
     echo "Menginstal Ctrlpanel..."
     apt -y install php8.3-{intl,redis} || { echo "Gagal menginstal dependensi PHP."; exit 1; }
-    curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer || { echo "Gagal menginstal Composer."; exit 1; }
+    curl -LsS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer || { echo "Gagal menginstal Composer."; exit 1; }
     
     mkdir -p /var/www/ctrlpanel && cd /var/www/ctrlpanel
     git clone https://github.com/Ctrlpanel-gg/panel.git ./ || { echo "Gagal mengunduh repository Ctrlpanel."; exit 1; }
-    
+
     # Menambahkan user dan database ke MySQL
     echo "Membuat user dan database MySQL..."
     mysql -u root -p"$PASSWORD" <<EOF
