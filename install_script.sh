@@ -1,12 +1,12 @@
 server {
     listen 80;
-    server_name YOUR.DOMAIN.HERE;
+    server_name ctrlpanel.neoxloud.web.id;
     return 301 https://\$server_name\$request_uri;
 }
 
 server {
     listen 443 ssl http2;
-    server_name YOUR.DOMAIN.HERE;
+    server_name ctrlpanel.neoxloud.web.id;
 
     root /var/www/ctrlpanel/public;
     index index.php;
@@ -19,8 +19,8 @@ server {
 
     sendfile off;
 
-    ssl_certificate /etc/letsencrypt/live/YOUR.DOMAIN.HERE/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/YOUR.DOMAIN.HERE/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/ctrlpanel.neoxloud.web.id/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ctrlpanel.neoxloud.web.id/privkey.pem;
     ssl_session_cache shared:SSL:10m;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384";
